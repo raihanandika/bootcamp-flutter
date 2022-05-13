@@ -16,6 +16,7 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
   int height = 100;
   int weight = 100;
   int age = 20;
+  String? comment;
 
   double calculateBmi() {
     double heightInMeter = height / 100;
@@ -23,7 +24,48 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
     // final h = pow(height, 2);
     final h = (heightInMeter * heightInMeter);
     final bmi = weight / h;
+    // setState(() {
+    //   if (bmi < 16) {
+    //     comment = "Underweight (Severe thinness)";
+    //   } else if ((bmi < 16) && (bmi < 16.9)) {
+    //     comment = "Underweight (Moderate thinness)";
+    //   } else if ((bmi >= 17) && (bmi <= 18.4)) {
+    //     comment = "Underweight (Mild thinness)";
+    //   } else if ((bmi >= 18.5) && (bmi <= 24.9)) {
+    //     comment = "Normal Range";
+    //   } else if ((bmi >= 25) && (bmi <= 29.9)) {
+    //     comment = "Normal Range";
+    //   } else if ((bmi >= 30) && (bmi <= 34.0)) {
+    //     comment = "Obese (class I)";
+    //   } else if ((bmi >= 35) && (bmi <= 39.9)) {
+    //     comment = "Obese (class II)";
+    //   } else if (bmi > 40) {
+    //     comment = "Obese (class III)";
+    //   }
+    // });
     return bmi;
+  }
+
+  String noteBmi(dynamic? value) {
+    String? comment;
+    if (value < 16) {
+      comment = "Underweight (Severe thinness)";
+    } else if ((value < 16) && (value < 16.9)) {
+      comment = "Underweight (Moderate thinness)";
+    } else if ((value >= 17) && (value <= 18.4)) {
+      comment = "Underweight (Mild thinness)";
+    } else if ((value >= 18.5) && (value <= 24.9)) {
+      comment = "Normal Range";
+    } else if ((value >= 25) && (value <= 29.9)) {
+      comment = "Normal Range";
+    } else if ((value >= 30) && (value <= 34.0)) {
+      comment = "Obese (class I)";
+    } else if ((value >= 35) && (value <= 39.9)) {
+      comment = "Obese (class II)";
+    } else if (value > 40) {
+      comment = "Obese (class III)";
+    }
+    return comment.toString();
   }
 
   @override
@@ -197,7 +239,8 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
                 // Navigator.of(context).pushNamed(Routename.bmiresultscreen, arguments: calculateBmi());
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return BmiResultScreen(bmi: calculateBmi());
+                  return BmiResultScreen(
+                      bmi: calculateBmi(), coment: noteBmi(calculateBmi()));
                 }));
               },
               child: Container(
