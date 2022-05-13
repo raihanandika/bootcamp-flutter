@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bootcamp_app/services/index.dart';
 import 'package:bootcamp_app/views/constants/constants.dart';
 import 'package:bootcamp_app/views/index.dart';
@@ -14,6 +16,15 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
   int height = 100;
   int weight = 100;
   int age = 20;
+
+  double calculateBmi() {
+    double heightInMeter = height / 100;
+
+    // final h = pow(height, 2);
+    final h = (heightInMeter * heightInMeter);
+    final bmi = weight / h;
+    return bmi;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,13 +160,13 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
                                   setState(() {});
                                 },
                                 elevation: 0,
-                                child: Icon(
+                                child: const Icon(
                                   Icons.add,
                                   color: Colors.white,
                                 ),
                                 shape: CircleBorder(),
                                 fillColor: Color(0xff212747),
-                                constraints: BoxConstraints.tightFor(
+                                constraints: const BoxConstraints.tightFor(
                                     width: 56, height: 56),
                               ),
                               SizedBox(width: 10),
@@ -165,13 +176,13 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
                                   setState(() {});
                                 },
                                 elevation: 0,
-                                child: Icon(
+                                child: const Icon(
                                   Icons.remove,
                                   color: Colors.white,
                                 ),
                                 shape: CircleBorder(),
                                 fillColor: Color(0xff212747),
-                                constraints: BoxConstraints.tightFor(
+                                constraints: const BoxConstraints.tightFor(
                                     width: 56, height: 56),
                               ),
                             ],
@@ -183,7 +194,11 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
             )),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).pushNamed(Routename.bmiresultscreen);
+                // Navigator.of(context).pushNamed(Routename.bmiresultscreen, arguments: calculateBmi());
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return BmiResultScreen(bmi: calculateBmi());
+                }));
               },
               child: Container(
                 color: Color(0xFFEC3C66),
